@@ -21,7 +21,7 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods #allows you to just call create and build instead of FactoryGirl.create
 
-  config.use_transactional_fixtures = false #don't want fixtures. factories ftw
+  config.use_transactional_fixtures = false
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

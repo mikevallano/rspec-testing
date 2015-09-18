@@ -10,6 +10,10 @@ RSpec.describe Post do
     expect(create(:post)).to be_valid
   end
 
+  it 'responds to title' do
+    expect(subject).to respond_to(:title)
+  end
+
   it 'is not valid without a title' do
     expect(build(:post, title: nil)).to_not be_valid
   end
