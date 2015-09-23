@@ -2,15 +2,21 @@ require 'rails_helper'
 
 feature "AddNewStores", :type => :feature do
 
-  let(:user) {FactoryGirl.create(:user)}
+  let(:admin) {FactoryGirl.create(:admin)}
+  let(:account_owner) {FactoryGirl.create(:account_owner)}
+  let(:manager) {FactoryGirl.create(:manager)}
+  let(:counselor) {FactoryGirl.create(:counselor)}
+
 
   it "should require the user log in before adding a store" do
 
     visit new_store_path
 
+
     within "#new_user" do
-      fill_in "user_email", with: user.email
-      fill_in "user_password", with: user.password
+      fill_in "user_email", with: manager.email
+      fill_in "user_password", with: manager.password
+      binding.pry
     end
 
     click_button "Log in"
@@ -28,7 +34,7 @@ feature "AddNewStores", :type => :feature do
   end
 
   it "should create a new store with a logged in user" do
-    login_as create(:user)#, scope: :user
+    login_as create(:admin)#, scope: :user
 
     visit new_store_path
     # puts page.body
