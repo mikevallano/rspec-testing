@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :order do
-    name {Faker::Commerce.product_name}
-    description {Faker::Commerce.department}
+    name { Faker::Company.name }
+    description { Faker::Company.bs }
     customer
   end
 

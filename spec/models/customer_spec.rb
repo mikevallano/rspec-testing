@@ -23,5 +23,13 @@ RSpec.describe Customer, :type => :model do
     expect(customer.name_and_email).to eq("name: jim ha, email: jim@aol.com")
   end
 
+  it "responds to orders" do
+    expect(customer).to respond_to(:orders)
+  end
+
+  it "does not respond to tacos" do
+    expect(customer).not_to respond_to(:tacos)
+  end
+
 
 end #final ender

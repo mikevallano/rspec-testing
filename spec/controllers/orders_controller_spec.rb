@@ -23,13 +23,10 @@ RSpec.describe OrdersController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Order. As you add validations to Order, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:order) {FactoryGirl.create(:order)}
+  let(:valid_attributes) { FactoryGirl.attributes_for(:order) }
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:order, name: nil) } #don't call create on an invalid param or it will stop there.
+  let(:orders) { Order.all }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -38,15 +35,19 @@ RSpec.describe OrdersController, :type => :controller do
 
   describe "GET index" do
     it "assigns all orders as @orders" do
-      order = Order.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:orders)).to eq([order])
+      order
+      get :index
+      expect(assigns(:orders)).to eq(orders) #referencing Order.all defined above
+    end
+
+    it "assigns customer to orders" do
+      expect(order.customer.present?).to be true
     end
   end
 
   describe "GET show" do
     it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
+      # order = Order.create! valid_attributes
       get :show, {:id => order.to_param}, valid_session
       expect(assigns(:order)).to eq(order)
     end
@@ -61,7 +62,6 @@ RSpec.describe OrdersController, :type => :controller do
 
   describe "GET edit" do
     it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
       get :edit, {:id => order.to_param}, valid_session
       expect(assigns(:order)).to eq(order)
     end
@@ -70,6 +70,7 @@ RSpec.describe OrdersController, :type => :controller do
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Order" do
+        order
         expect {
           post :create, {:order => valid_attributes}, valid_session
         }.to change(Order, :count).by(1)
@@ -77,7 +78,7 @@ RSpec.describe OrdersController, :type => :controller do
 
       it "assigns a newly created order as @order" do
         post :create, {:order => valid_attributes}, valid_session
-        expect(assigns(:order)).to be_a(Order)
+        expect(assigns(:order)).to be_an(Order)
         expect(assigns(:order)).to be_persisted
       end
 
@@ -89,6 +90,7 @@ RSpec.describe OrdersController, :type => :controller do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved order as @order" do
+        puts "invalid attributes: #{invalid_attributes}"
         post :create, {:order => invalid_attributes}, valid_session
         expect(assigns(:order)).to be_a_new(Order)
       end
@@ -102,25 +104,30 @@ RSpec.describe OrdersController, :type => :controller do
 
   describe "PUT update" do
     describe "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      # let(:order) { FactoryGirl.create(:order) }
+      let(:new_attributes) { FactoryGirl.attributes_for(:order, name: "taco") }
 
       it "updates the requested order" do
-        order = Order.create! valid_attributes
+        order
+        puts "order name: #{order.name}"
+        puts "new attributes: #{new_attributes}"
         put :update, {:id => order.to_param, :order => new_attributes}, valid_session
+        puts "order name: #{order.name}"
         order.reload
+        puts "order name: #{order.name}"
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested order as @order" do
-        order = Order.create! valid_attributes
+        order
+        puts "order is: #{order.name}"
         put :update, {:id => order.to_param, :order => valid_attributes}, valid_session
         expect(assigns(:order)).to eq(order)
       end
 
       it "redirects to the order" do
-        order = Order.create! valid_attributes
+        order
+        puts "order is: #{order.name}"
         put :update, {:id => order.to_param, :order => valid_attributes}, valid_session
         expect(response).to redirect_to(order)
       end
@@ -128,7 +135,7 @@ RSpec.describe OrdersController, :type => :controller do
 
     describe "with invalid params" do
       it "assigns the order as @order" do
-        order = Order.create! valid_attributes
+        order
         put :update, {:id => order.to_param, :order => invalid_attributes}, valid_session
         expect(assigns(:order)).to eq(order)
       end

@@ -7,14 +7,12 @@ RSpec.describe Order, :type => :model do
     expect(order).to respond_to(:name)
   end
 
-  it { should validate_presence_of :customer }
+  it { should_not validate_presence_of :customer }
 
-  it { should_not validate_presence_of :name }
+  it { should validate_presence_of :name }
 
   it "responds to orderer" do
     expect(order).to respond_to(:orderer)
-    puts "order: #{order.name}"
-    puts "orderer: #{order.orderer}"
   end
 
 
