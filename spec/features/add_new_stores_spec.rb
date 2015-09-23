@@ -2,16 +2,22 @@ require 'rails_helper'
 
 feature "AddNewStores", :type => :feature do
 
-  let(:admin) {FactoryGirl.create(:admin)}
-  let(:account_owner) {FactoryGirl.create(:account_owner)}
-  let(:manager) {FactoryGirl.create(:manager)}
-  let(:counselor) {FactoryGirl.create(:counselor)}
+  let(:admin) { FactoryGirl.create(:admin) }
+  let(:account_owner) { FactoryGirl.create(:account_owner) }
+  let(:manager) { FactoryGirl.create(:manager) }
+  let(:counselor) { FactoryGirl.create(:counselor) }
+  let(:user) { FactoryGirl.create(:user) }
 
 
   it "should require the user log in before adding a store" do
 
     visit new_store_path
 
+    admin
+    account_owner
+    manager
+    counselor
+    user
 
     within "#new_user" do
       fill_in "user_email", with: manager.email
