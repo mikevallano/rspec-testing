@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :cats
   resources :orders
   resources :articles
   resources :posts
   resources :customers
+
+  root 'cats#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
