@@ -14,7 +14,7 @@ RSpec.describe StoresController, :type => :controller do
     end
 
     it "should let a user see all the stores" do
-      login_with create(:user)
+      login_with create(:admin)
       get :index
       expect(response).to render_template(:index)
     end
