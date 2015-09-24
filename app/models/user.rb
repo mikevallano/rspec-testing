@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def account_owner?
-    self.roles.map(&:name).include?("account owner") || self.account.owner_id == self.id
+    self.roles.map(&:name).include?("account owner")
   end
 
   def manager?

@@ -1,11 +1,13 @@
 class StoresController < ApplicationController
   before_action :set_store, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  include Pundit
 
   # GET /stores
   # GET /stores.json
   def index
     @stores = Store.all
+    authorize @stores
   end
 
   # GET /stores/1
@@ -16,6 +18,7 @@ class StoresController < ApplicationController
   # GET /stores/new
   def new
     @store = Store.new
+    authorize @store
   end
 
   # GET /stores/1/edit
@@ -26,6 +29,7 @@ class StoresController < ApplicationController
   # POST /stores.json
   def create
     @store = Store.new(store_params)
+    authorize @store
 
     respond_to do |format|
       if @store.save
@@ -66,6 +70,7 @@ class StoresController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_store
       @store = Store.find(params[:id])
+      authorize @store
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
