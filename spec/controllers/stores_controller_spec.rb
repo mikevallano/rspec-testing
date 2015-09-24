@@ -11,8 +11,8 @@ RSpec.describe StoresController, :type => :controller do
   let(:valid_attributes) { FactoryGirl.attributes_for(:store) }
   let(:invalid_attributes) { FactoryGirl.attributes_for(:store, name: nil) }
 
-  let(:valid_session) {login_with create(:admin)}
-  let(:invalid_session) {login_with nil }
+  # let(:valid_session) {login_with create(:admin)}
+  # let(:invalid_session) {login_with nil }
 
 
   describe 'GET #index' do
